@@ -1,0 +1,19 @@
+/* SOPA de LETRAS */
+
+.gridlayer
+{
+    position: absolute;
+}
+
+div.letter
+{
+    text-align:center;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+}
+
+div.locked
+{
+    cursor:default!important;
+}

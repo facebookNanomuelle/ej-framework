@@ -1,0 +1,7 @@
+.barquitos .imgCorrecto {
+    display: none!important;
+}
+
+.barquitos .imgCorrecto.tachado {
+    display: block!important;
+}

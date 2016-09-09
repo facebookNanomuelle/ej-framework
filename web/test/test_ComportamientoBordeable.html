@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comportamiento Bordeable</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        window.Ejercicio = {};
+        
+        // mockup EjercicioPadre
+        window.EjercicioPadre = {
+            // escala 1:2
+            getScaleX: function () { return 0.5; }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoBordeable.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ComportamientoBordeable");
+        QUnit.test("Clase bordeable", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {},
+                bordeable = new Ejercicio.ComportamientoBordeable(cfg);
+            
+            bordeable.bordear(elemento);
+            assert.ok(CHA.hasClass(elemento, 'bordeable'), "added clase bordeable");
+        });    
+        QUnit.test("cfg.colorBorde", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    colorBorde: 'FFFFFF'
+                },
+                bordeable = new Ejercicio.ComportamientoBordeable(cfg);
+            
+            bordeable.bordear(elemento);
+            assert.ok(elemento.style.borderColor.indexOf('255, 255, 255') !== -1, "cfg.colorBorde");
+        });    
+        QUnit.test("cfg.alphaBorde", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    colorBorde: 'FFFFFF',
+                    alphaBorde: 50
+                },
+                bordeable = new Ejercicio.ComportamientoBordeable(cfg);
+            
+            bordeable.bordear(elemento);
+            assert.ok(elemento.style.borderColor.indexOf('rgba') !== -1, "cfg.alphaBorde");
+        });    
+        QUnit.test("cfg.redondear", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    colorBorde: 'FFFFFF',
+                    redondear: 'si,10,2'
+                },
+                bordeable = new Ejercicio.ComportamientoBordeable(cfg);
+            
+            bordeable.bordear(elemento);
+            assert.equal(elemento.style.borderRadius, '5px', "cfg.redondear borderRadius");
+            assert.equal(elemento.style.borderWidth, '1px', "cfg.redondear borderWidth");
+        });    
+    </script>
+</body>
+</html>
+

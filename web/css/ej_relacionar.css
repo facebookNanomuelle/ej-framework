@@ -1,0 +1,98 @@
+/* RELACIONAR */
+div.relacionar.sourcebox,
+div.relacionar.targetbox
+{    
+    position: absolute!important;
+    
+/*    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, 0);*/
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    
+    /*background-color:#FFFFFF;*/    
+    text-align:center;
+    vertical-align: middle;
+    
+    background-clip: padding-box;      /* Firefox 4+, Safari 5, Opera 10, IE 9 */
+    -moz-background-clip: padding;     /* Firefox 3.6+ */
+    -webkit-background-clip: padding;  /* Safari 4 Chrome 6 */    
+}
+
+div.targetbox,
+div.sourcebox {
+    overflow: visible;    
+}
+
+#ebody.relacionar {
+    overflow: hidden;
+}
+
+.relacionar span.innertext.centrar_vertical_1{
+    top:50%;
+    margin-top:-0.75em;
+}
+
+.relacionar span.innertext.centrar_vertical_2{
+    top:50%;
+    margin-top:-1.25em;
+}
+
+.relacionar span.innertext.centrar_vertical_3{
+    top:50%;
+    margin-top:-1.75em;
+}
+
+.relacionar span.innertext.centrar_vertical_4{
+    top:50%;
+    margin-top:-2.25em;
+}
+
+/*div.relacionar.sourcebox span.innertext,
+div.relacionar.targetbox span.innertext{
+    top:50%;
+    margin-top:-0.5em;
+}
+
+div.relacionar.sourcebox span.innertext.alinear_vertical_2,
+div.relacionar.targetbox span.innertext.alinear_vertical_2{
+    margin-top:-1.0em;
+}
+
+div.relacionar.sourcebox span.innertext.alinear_vertical_3,
+div.relacionar.targetbox span.innertext.alinear_vertical_3{
+    margin-top:-1.5em;
+}
+
+div.relacionar.sourcebox span.innertext.alinear_vertical_4,
+div.relacionar.targetbox span.innertext.alinear_vertical_4{
+    margin-top:-2.0em;
+}*/
+/*div.sourcebox,
+div.targetbox {
+    cursor: pointer;    
+}
+
+div.sourcebox p, 
+div.draggedbox p {
+    margin: 0;
+}
+
+div.targetbox {
+    position:static!important;
+    vertical-align:text-top!important;
+    display:inline-block!important;
+    zoom:1!important;             // (Hack for ie7 y 8
+    *display:inline!important;    // (Hack for ie7 y 8
+}
+
+div.targetbox.capitalize div.draggedbox:first-letter 
+{
+    text-transform: uppercase;
+}*/
+/*div.sourcebox {
+    z-index: 0;
+}
+div.draggedbox {
+    z-index: -1;
+}*/

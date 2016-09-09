@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<EJ>
+    <EJERCICIO 
+        tipo="ahorcado"
+        enunciado="Ahorcado"
+        clase=""
+        
+        pasos="10"
+        
+        evaluacion="parcial"
+        audioCorrecto="elemento"
+        audioIncorrecto="global"
+        >
+        
+        <PALABRA palabra="PALABRA" />
+    </EJERCICIO>    
+</EJ>

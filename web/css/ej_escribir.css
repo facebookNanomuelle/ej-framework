@@ -1,0 +1,19 @@
+/* ESCRIBIR */
+input.writeinput
+{
+//    position: absolute;
+    text-align: left;
+//    font-family: EscolarNegra, "Trebuchet MS", Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    padding: 0px;   /* Formateo para las cajas en ipad */
+    margin: 0px;    /* Formateo para las cajas en ipad */
+}
+
+input.writeinput.correct
+{
+    background-color:#80FF80!important;
+}
+
+input.writeinput.incorrect
+{
+    background-color:#FF8080!important;
+}

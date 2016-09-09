@@ -1,0 +1,25 @@
+.mariposas #myImage0 {
+    z-index: 90;
+}
+
+.gancho {
+    /*border: 1px solid red;*/
+    /*background-color: greenyellow;*/
+}
+.gancho.ocupado {
+    /*border: 1px solid red;*/
+    /*background-color: red;*/
+}
+
+.mariposa {
+    /*border: 0px solid greenyellow;*/
+    /*background-color: red;*/
+}
+
+.mariposa:hover {
+    cursor: pointer;
+}
+
+.mariposa.correcto {
+    /*background-color: #22b1e1;*/
+}

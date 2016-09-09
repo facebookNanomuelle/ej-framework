@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comportamiento Pulsable</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        window.Ejercicio = {};
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPulsable.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        var triggerMouseDownEventOnElement = function(elemento, p_nombre_evento) {
+            var mouseDownEvent = document.createEvent('MouseEvents');
+            mouseDownEvent.initEvent(p_nombre_evento, true, true);
+            elemento.dispatchEvent(mouseDownEvent);
+        };
+        
+        QUnit.module("ComportamientoPulsable");
+        QUnit.test("Crear pulsable", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                pulsable = new Ejercicio.ComportamientoPulsable(elemento);
+            
+            assert.ok(CHA.hasClass(elemento, 'pulsable'), "added clase pulsable");
+        });    
+        QUnit.test("evento", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                veces_pulsado = 0,
+                test_callback = function () {                    
+                    veces_pulsado++;
+                    return;
+                },
+                pulsable = new Ejercicio.ComportamientoPulsable(elemento, test_callback);
+            
+            triggerMouseDownEventOnElement(elemento, pulsable.getNombreEventoGestionado());
+            assert.equal(veces_pulsado, 1, "callback ejecutado una vez (" + pulsable.getNombreEventoGestionado() + ")");
+        });    
+        QUnit.test("destruir", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                veces_pulsado = 0,
+                test_callback = function () {                    
+                    veces_pulsado++;
+                    return;
+                },
+                pulsable = new Ejercicio.ComportamientoPulsable(elemento, test_callback);
+            
+            triggerMouseDownEventOnElement(elemento, pulsable.getNombreEventoGestionado());
+            pulsable.destruir();
+            triggerMouseDownEventOnElement(elemento, pulsable.getNombreEventoGestionado());
+            assert.equal(veces_pulsado, 1, "callback destruido");
+            assert.notOk(CHA.hasClass(elemento, 'pulsable'), "clase pulsable removida");
+        });    
+    </script>
+</body>
+</html>
+

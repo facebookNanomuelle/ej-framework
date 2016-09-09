@@ -1,0 +1,37 @@
+div.pulsador
+{
+    position: relative !important;
+    display: inline-block !important;
+
+    border-style: solid;
+
+    /*font-family: "Trebuchet MS", Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;*/
+    text-align: center;
+    vertical-align: middle;
+
+    cursor: default;
+    padding: 0 !important;
+    
+    overflow: hidden;
+    
+    background-clip: padding-box;       /* Firefox 4+, Safari 5, Opera 10, IE 9 */
+    -moz-background-clip: padding;      /* Firefox 3.6+ */
+    -webkit-background-clip: padding;   /* Safari 4 Chrome 6 */
+}
+
+div.pulsador.pulsador_hover,
+div.pulsador.pulsador_active.pulsador_hover
+{
+    cursor: pointer;
+}
+
+div.pulsador.pulsador_correct
+{
+    background-color: #80FF80 !important;
+}
+
+div.pulsador.pulsador_incorrect,
+div.pulsador.pulsador_incorrect.pulsador_hover
+{
+    background-color: #FF8080 !important;
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elemento MARCADOR</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    <script src="../recursos/CHA.DomHelper.js" type="text/javascript" ></script>
+    
+    <script>
+        var factor_de_escala = 0.5;
+
+        // mockup Ejercicio
+        window.Ejercicio = {
+            crearTagDiv: CHA.domHelper.crearTagDiv,
+            crearTag: CHA.domHelper.crearTag
+        };
+        
+        // mockup EjercicioPadre        
+        window.EjercicioPadre = {
+            config: { folder: '' },
+            
+            // escala 1:2
+            getScaleX: function () { return factor_de_escala; },
+            getScaleY: function () { return factor_de_escala; },
+            normalizedFontSize: function (fontSize) {
+                var rel = factor_de_escala;
+                return ((Math.round(fontSize * rel * 10)) / 10);
+            }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoTexturizable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoBordeable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoTEXTO.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoMARCADOR.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ElementoMARCADOR");
+        QUnit.test("constructor", function( assert ) {
+            var id = "marcador01",
+                cfg = {},                
+                marcador = new Ejercicio.MARCADOR(id, cfg);
+                
+            assert.equal(marcador.getId(), id, "getId es un metodo de MARCADOR");
+            assert.deepEqual(marcador.getCfg(), cfg, "getCfg es un metodo de MARCADOR");
+            assert.equal(typeof marcador.render, "function", "render es un metodo de MARCADOR");
+        });    
+        QUnit.test("config puntuacion", function( assert ) {
+            var id = "marcador01",
+                cfg = {
+                    puntuacion: "3"
+                },
+                marcador = new Ejercicio.MARCADOR(id, cfg);
+                
+            assert.equal(marcador.getPuntuacion(), 3, "getPuntuacion es 0");
+            assert.equal(marcador.getPuntuacionMaxima(), null, "getPuntuacionMaxima maxima es null");
+        });    
+        QUnit.test("config puntuacionMaxima", function( assert ) {
+            var id = "marcador01",
+                cfg = {
+                    puntuacionMaxima: "3"
+                },
+                marcador = new Ejercicio.MARCADOR(id, cfg);
+                
+            assert.equal(marcador.getPuntuacion(), 0, "getPuntuacion es 0");
+            assert.equal(marcador.getPuntuacionMaxima(), 3, "getPuntuacionMaxima maxima es 3");
+        });        
+        QUnit.test("config separador", function( assert ) {
+            var id = "marcador01",
+                cfg = {
+                    puntuacion: "3",
+                    puntuacionMaxima: "10",
+                    mostrarPuntuacionMaxima: "si",
+                    separador: "-"
+                },
+                texto_esperado = "3-10",
+                marcador = new Ejercicio.MARCADOR(id, cfg);
+                
+            assert.equal(marcador.getTexto(), texto_esperado, "getTexto es " + texto_esperado);
+        });    
+        QUnit.test("incrementar", function( assert ) {
+            var id = "marcador01",
+                cfg = {
+                    puntuacion: "3",
+                    puntuacionMaxima: "10",
+                    mostrarPuntuacionMaxima: "si",
+                    separador: "-"
+                },
+                texto_esperado = "4-10",
+                texto_esperado2 = "6-10",
+                marcador = new Ejercicio.MARCADOR(id, cfg);
+            marcador.incrementar();
+            assert.equal(marcador.getTexto(), texto_esperado, "getTexto es " + texto_esperado);
+            marcador.incrementar(2);
+            assert.equal(marcador.getTexto(), texto_esperado2, "getTexto es " + texto_esperado2);
+        });    
+        QUnit.test("activar/desactivar", function( assert ) {
+            var id = "marcador01",
+                cfg = {
+                    puntuacion: "3",
+                    puntuacionMaxima: "10",
+                    mostrarPuntuacionMaxima: "si",
+                    separador: "-"
+                },
+                marcador = new Ejercicio.MARCADOR(id, cfg);
+            
+            assert.ok(marcador.estaActivo(), "estaActivo es verdadero");
+            marcador.desactivar();
+            assert.notOk(marcador.estaActivo(), "estaActivo es false");
+            marcador.activar();
+            assert.ok(marcador.estaActivo(), "estaActivo es verdadero de nuevo");
+        });    
+        QUnit.test("render", function( assert ) {
+            var id = "marcador01",
+                cfg = {
+                    puntuacion: "3",
+                    puntuacionMaxima: "10",
+                    mostrarPuntuacionMaxima: "si",
+                    separador: "-"
+                },
+                marcador = new Ejercicio.MARCADOR(id, cfg),
+                elemento_marcador = 
+            
+            marcador.render(document.getElementById('qunit-fixture'));
+            
+            assert.ok(document.getElementById(id), "elemento #" + id + " existe");
+            assert.ok(document.getElementById(id), "elemento #" + id + " existe");
+        });    
+    </script>
+</body>
+</html>

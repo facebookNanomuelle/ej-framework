@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio Ahorcado</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="ejercicio">
+            <div id="etitle"></div>
+            <div id="container">
+                <div id="ebody"></div>
+                <div id="final" style="display:none;position:absolute;top:0px;left:0px;width:100%;height:100%;"></div>
+            </div>            
+        </div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>    
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <script src="../recursos/ej_ahorcado.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        var crearConfiguracionBasica = function () {            
+                var config = {
+                        EJERCICIO: {
+                            tipo: "ahorcado",
+                            enunciado: "Ahorcado",
+                            FRASE: {
+                                solucion: "Fráse de prueba"
+                            }
+                        }
+                    };
+                    
+                return config;
+            },
+            crearEngine = function (p_config) {
+                return new EjercicioAhorcado.__TestableAhorcadoEngine__(p_config.EJERCICIO);
+            };
+        
+        QUnit.module("AhorcadoEngine");
+        QUnit.test("Config maxIntentos por defecto", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);  
+            
+            assert.equal(engine.getMaxIntentos(), 10, "Numero maximo de intentos por defecto");
+        });    
+        QUnit.test("Config maxIntentos", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine;
+                             
+            config.EJERCICIO.maxIntentos = "6";
+            engine = crearEngine(config);
+            
+            assert.equal(engine.getMaxIntentos(), 6, "config maxIntentos");
+        });    
+        QUnit.test("Config solucion", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            assert.equal(engine.getSolucion(), config.EJERCICIO.FRASE.solucion, "getSolucion() => " + config.EJERCICIO.FRASE.solucion);
+        });    
+        QUnit.test("Get Frase Usuario", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            assert.equal(engine.getFraseUsuario(), '_____ __ ______', "'Frase de prueba' => _____ __ ______");
+        });    
+        QUnit.test("Get Letras Restantes", function( assert ) {
+            var letras_restantes = 'abcdefghijklmnopqrstuvwxyz'.split(''),
+                config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            assert.deepEqual(engine.getLetrasRestantes(), letras_restantes, "Letras restantes");
+        });    
+        QUnit.test("Get Letras Pulsadas", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            assert.deepEqual(engine.getLetrasPulsadas(), [], "Letras pulsadas");
+        });    
+        QUnit.test("Get Letras Falladas", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            engine.seleccionarLetra('x');
+            assert.deepEqual(engine.getLetrasFalladas(), ['x'], "Letras falladas");
+        });    
+        QUnit.test("Get Letras Acertadas", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            engine.seleccionarLetra('a');
+            assert.deepEqual(engine.getLetrasAcertadas(), ['a'], "Letras acertadas");
+        });    
+        QUnit.test("Seleccionar letra que NO pertenece a la solucion", function( assert ) {
+            var letra = 'k',
+                config = crearConfiguracionBasica(),
+                testigo_letra = null,
+                testFalloHandler = function (p_letra) {
+                    testigo_letra = p_letra;
+                },
+                engine = crearEngine(config);
+            
+            engine.onLetraIncorrecta(testFalloHandler);
+            engine.seleccionarLetra(letra);
+            
+            assert.ok(engine.getLetrasPulsadas().indexOf(letra) !== -1, "Letra " + letra + " pulsada");
+            assert.ok(engine.getLetrasRestantes().indexOf(letra) === -1, "Letra " + letra + " ya no esta entre las restantes");
+            assert.equal(engine.getNumFallos(), 1, "Numero de fallos es 1");
+            assert.equal(testigo_letra, letra, "Se dispara el evento onLetraIncorrecta(" + letra + ")");
+        });            
+        QUnit.test("modeloLetra", function( assert ) {
+            var letra = 'Á',
+                modelo_letra_esperado = 'a',
+                modelo_letra_obtenido,
+                config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+            
+            modelo_letra_obtenido = engine.modeloLetra(letra);
+            
+            assert.equal(modelo_letra_obtenido, modelo_letra_esperado, "modeloLetra(" + letra + ") => " + modelo_letra_esperado);
+        });    
+        QUnit.test("Seleccionar letra que SI pertenece a la solucion", function( assert ) {
+            var letra = 'a',
+                frase_usuario = '__á__ __ _____a',
+                config = crearConfiguracionBasica(),
+                testigo_letra = null,
+                testAciertoHandler = function (p_letra) {
+                    testigo_letra = p_letra;
+                },
+                engine = crearEngine(config);
+                             
+            engine.onLetraCorrecta(testAciertoHandler);
+            engine.seleccionarLetra(letra);
+            
+            assert.ok(engine.getLetrasPulsadas().indexOf(letra) !== -1, "Letra " + letra + " pulsada");
+            assert.ok(engine.getLetrasRestantes().indexOf(letra) === -1, "Letra " + letra + " ya no esta entre las restantes");
+            assert.equal(engine.getFraseUsuario(), frase_usuario, "Frase usuario es " + frase_usuario);
+            assert.equal(testigo_letra, letra, "Se dispara el evento onLetraCorrecta(" + letra + ")");
+        });            
+        QUnit.test("estaSolucionado", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine = crearEngine(config);
+                             
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('f');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('r');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('a');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('s');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('e');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('d');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('p');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('u');
+            assert.notOk(engine.getSolucionado(), "aún no estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+            engine.seleccionarLetra('b');
+            assert.ok(engine.getSolucionado(), "ya está estaSolucionado. Pulsadas => [" + engine.getLetrasPulsadas() + "]");
+        });
+        QUnit.test("intentosAgotados", function( assert ) {
+            var config = crearConfiguracionBasica(),
+                engine;
+            
+            config.EJERCICIO.maxIntentos = "2";
+            engine = crearEngine(config);
+                             
+            assert.notOk(engine.getIntentosAgotados(), "intentos " + engine.getNumFallos() + " de " + engine.getMaxIntentos());
+            engine.seleccionarLetra('x');
+            assert.notOk(engine.getIntentosAgotados(), "intentos " + engine.getNumFallos() + " de " + engine.getMaxIntentos());
+            engine.seleccionarLetra('y');
+            assert.ok(engine.getIntentosAgotados(), "intentos " + engine.getNumFallos() + " de " + engine.getMaxIntentos());
+        });
+        
+    </script>
+</body>
+</html>
+

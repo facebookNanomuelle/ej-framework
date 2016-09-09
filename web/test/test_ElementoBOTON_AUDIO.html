@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elemento BOTON AUDIO</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    <script src="../recursos/CHA.DomHelper.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        var triggerMouseDownEventOnElement = function(elemento, p_nombre_evento) {
+                var mouseDownEvent = document.createEvent('MouseEvents');
+                mouseDownEvent.initEvent(p_nombre_evento, true, true);
+                elemento.dispatchEvent(mouseDownEvent);
+            };
+        
+        window.Ejercicio = {
+            crearTagDiv: CHA.domHelper.crearTagDiv
+        };
+        
+        // mockup EjercicioPadre
+        window.EjercicioPadre = {
+            // escala 1:2
+            getScaleX: function () { return 0.5; },
+            getScaleY: function () { return 0.5; },
+            config: { folder: 'datos_BOTON_AUDIO/curso/' }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoTexturizable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoPulsable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoBOTON.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoBOTON_AUDIO.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ElementoBOTON_AUDIO");
+        QUnit.test("constructor", function( assert ) {
+            var id = "boton01",
+                cfg = {},                
+                boton = new Ejercicio.BOTON_AUDIO(id, cfg);
+                
+            assert.equal(boton.getId(), id, "getId es un metodo de BOTON_AUDIO");
+            assert.deepEqual(boton.getCfg(), cfg, "getCfg es un metodo de BOTON_AUDIO");
+            assert.equal(typeof boton.render, "function", "render es un metodo de BOTON_AUDIO");
+            assert.equal(typeof boton.destruir, "function", "destruir es un metodo de BOTON_AUDIO");
+        });    
+        QUnit.test("render", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg);
+            
+            boton.render(document.getElementById('qunit-fixture'));            
+            assert.ok(document.getElementById(id), "Se ha creado el boton con id " + id);
+        });
+        QUnit.test("Cfg audio inexistente", function ( assert ) {
+            var id = "boton01",
+                audio_existente = 'bla_bla_bla.mp3',
+                cfg = {x: 0, y: 0, w: 10, h: 10,
+                    audio: audio_existente},
+                boton = new Ejercicio.BOTON(id, cfg);
+            
+            boton.render(document.getElementById('qunit-fixture'));
+            assert.ok(boton.estaActivo(), "El boton audio esta desactivado");
+        });
+        QUnit.test("Cfg audio existente", function ( assert ) {
+            var id = "boton01",
+                audio_existente = 'audio_ejemplo.mp3',
+                cfg = {x: 0, y: 0, w: 10, h: 10,
+                    audio: audio_existente},
+                boton = new Ejercicio.BOTON(id, cfg);
+            
+            boton.render(document.getElementById('qunit-fixture'));
+            assert.ok(boton.estaActivo(), "El boton audio esta activo");
+        });
+    </script>
+</body>
+</html>
+

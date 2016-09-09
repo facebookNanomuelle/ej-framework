@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<EJ>
+    <EJERCICIO 
+        tipo="ahorcado"
+        enunciado="Ahorcado"
+        clase=""
+        
+        maxIntentos="3"
+        
+        evaluacion="parcial"
+        audioCorrecto="global"
+        audioIncorrecto="global"
+        >
+        
+        <FRASE
+            x="100"
+            y="300"
+            tamTexto="30"
+            fuente="Monospace"
+            _solucion="Frase de ejemplo áèïôu"
+            solucion="Frase"
+        />
+        
+        <VIDAS
+            x="600"
+            y="160"
+            w="200"
+            h="200"
+            imagen="vidas.png"
+        />
+        
+        <TESTIGO_LETRAS_FALLADAS
+            x="600"
+            y="400"
+            tamTexto="20"
+            color="FF0000"
+            fuente="Monospace"
+        />
+        
+        <TESTIGO_LETRAS_ACERTADAS
+            x="100"
+            y="400"
+            tamTexto="20"
+            color="00FF00"
+            fuente="Monospace"
+        />
+        
+        <TECLADO 
+            x="100"
+            y="450"
+            
+            fuente="Monospace"
+            tamTexto="30"
+
+            _xTexto="50"
+            _yTexto="50"
+
+            anchoTecla="50"
+            altoTecla="50"
+
+            imagenTecla="BOTON_REDONDO.png"
+            
+        />
+    </EJERCICIO>    
+    <TEXTO
+        x="100"
+        y="150"
+        tamTexto="25"
+        texto="Pista: Frase de ejemplo áèïôu" 
+    />
+</EJ>

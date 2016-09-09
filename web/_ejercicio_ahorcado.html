@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Módulos ejercicios</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" /> 
+    
+    <link href="jquery/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/ejercicio.css" rel="stylesheet" type="text/css" />
+    <link href="res_ahorcado/css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link href="css/chrono.css" rel="stylesheet" type="text/css" />    
+    <link href="res_ahorcado/css/chrono.css" rel="stylesheet" type="text/css" />    
+    
+    <link href="css/ej_ahorcado.css" rel="stylesheet" type="text/css" />
+    <link href="res_ahorcado/css/ej_ahorcado.css" rel="stylesheet" type="text/css" />    
+</head>
+
+<body>
+        <!-- Plantilla de la pagina -->        
+        <div id="ejercicio">
+            <div class="ui-widget-header" style="text-align:center;min-height:50px;">
+                <div id="ehead" class="ui-widget" style="display:inline;"> 
+                    <button id="etitle"></button>
+                    <button id="btReset"></button>
+                    <button id="btClose"></button>
+                </div>        
+            </div>
+            <div id="container">
+                <div id="ebody"></div>
+                <div id="final" style="display:none;position:absolute;top:0px;left:0px;width:100%;height:100%;"></div>
+            </div>
+            <div id="efoot" class="ui-widget-header"></div>
+        </div>
+        <div id="sound"></div>
+
+    <script src="jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="jquery/jquery.tap.min.js" type="text/javascript"></script>
+    <script src="jquery/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
+    <script src="jquery/jquery.ui.touch-punch.min.js" type="text/javascript"></script>    
+    <script src="jquery/jquery.xml2json.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="recursos/constantes_develop.js"></script>    <!-- Modulo charmed -->
+    
+    <script type="text/javascript" src="recursos/cha.js"></script>    <!-- Modulo charmed -->
+    <script type="text/javascript" src="recursos/CHA.DomHelper.js"></script>    
+
+    <script type="text/javascript" src="recursos/debug.js"></script>    <!-- Funciones desarrollo -->
+    <script type="text/javascript" src="recursos/browser.js"></script>    <!-- Funciones desarrollo -->
+        
+    <script type="text/javascript" src="recursos/ImageManager.js"></script>  <!-- Modulo ImageManager -->
+    <script type="text/javascript" src="recursos/chrono.js"></script>  <!-- Modulo chrono -->
+    <script type="text/javascript" src="recursos/imagestrips.js"></script>  <!-- Modulo animaciones -->
+    
+    <script type="text/javascript" src="recursos/botonera.js"></script>
+    <script type="text/javascript" src="recursos/ejercicio.js"></script>    <!-- Ejercicio genérico -->    
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoContenedor.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoPosicionable.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoTexturizable.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoArrastrable.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoPulsable.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoMarcadores.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ComportamientoBordeable.js"></script>
+    
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoCAJA.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoVENTANA.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoIMG.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoTEXTO.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoTEXTAREA.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoBOTON.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoBOTON_AUDIO.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoPROGRESO.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoCONSOLA_AUDIO.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoSWIFFY.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoMARCADOR.js"></script>
+    <script type="text/javascript" src="recursos/Ejercicio.ElementoTECLADO.js"></script>
+        
+    <script type="text/javascript" src="recursos/ej_ahorcado.js"></script>  <!-- Ejercicios especificos -->    
+    
+    <script type="text/javascript" src="js/runtime.js"></script>  
+    <script type="text/javascript" src="recursos/AnimacionFinal.js"></script>  
+    
+    <script type="text/javascript" src="audio/audio.js"></script>
+    
+    <script language="javascript">
+        $(document).ready(function () {
+            var qs = function (search_for) {
+                    var query = window.location.search.substring(1),
+                        parms = query.split('&'),
+                        i,
+                        cuenta,
+                        pos;
+
+                    for (i = 0, cuenta = parms.length; i < cuenta; i++) {
+                        pos = parms[i].indexOf('=');
+                        if (pos > 0 && search_for === parms[i].substring(0, pos)) {
+                            return parms[i].substring(pos + 1); ;
+                        }
+                    }
+                    return "";
+                };
+
+            EjercicioPadre.inicializarEjercicio(
+                qs("id") || "010101", {
+                    folder: qs("dir") || "curso_ahorcado", 
+                    resfolder:qs("resdir") || "res_ahorcado"
+            });            
+        });        
+    </script>
+    
+</body>
+</html>

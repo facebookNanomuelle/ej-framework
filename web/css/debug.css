@@ -1,0 +1,183 @@
+
+#dbg
+{
+    position: absolute;
+    top: 50px;
+    left: 150px;
+    background-color: #0000FF;
+    z-index: 100;
+    width: 250px;
+    font-size: 9px;
+}
+
+
+
+#dbg-head
+{
+    background-color: #FFFF00;
+    margin: 1px;
+}
+
+
+.dbg-titles
+{
+    background-color: #FF0000;
+    margin: 1px;
+    padding: 0px;
+}
+
+
+.dbg-buttons
+{
+    list-style-type: none;
+    display: inline-block;
+    position: relative;
+    font-size: small;
+    margin: 1px;
+    padding: 1px;
+    font-size: 7px;
+    
+}
+
+
+ul a{
+    padding-right: 1px;
+    padding-left: 1px;
+    display: block;
+    text-decoration: none;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 9px;
+    color: #371C1C;
+}
+
+.dbg-buttons li{
+    text-decoration: underline;
+    float: left;
+    margin: 1px 5px 1px 5px;
+    padding: 1px 5px 1px 5px;
+    border: 1px solid #000000;
+    background-color: #80FF80;
+}
+
+li.selected {
+    background-color: #FFFF80;
+}
+
+.dbg-content{}
+
+#dbg-content{}
+
+#dbg-content-text{}
+
+.dbg-content-title
+{
+    font-size: 12px;
+    color: #FFFFFF;
+    margin: 0px;
+}
+
+
+
+#dbg-consola{
+    visibility: visible;
+}
+
+#dbg-tools{
+    visibility: visible;
+}
+
+
+#dbg-button-tool{
+    font-size: 9px;
+}
+
+
+/*
+    <div id='dbg'>
+        <div id='dbg-on'><a>X</a></div>
+        <div id='dbg-head'>
+            <ul id='dbg-menu-head' class='dbg-buttons'>
+                <li><a id='dbg-item-consola'>Consola</a></li>
+                <li><a id='dbg-item-tools'>Tools</a></li>
+            </ul>
+        </div>
+        
+        <div id='dbg-consola'>
+            <div class='dbg-titles'>
+                <ul id='dbg-menu-consola' class='dbg-buttons'>
+                    <li><a id='dbg-item-a'>Cuatro</a></li>
+                    <li><a id='dbg-item-b'>Cinco</a></li>
+                </ul>
+            </div>
+            <div id='dbg-content' class='dbg-content'>
+                <span id='dbg-content-title'>Titulo del contenido asldkfjñasi aslñeif  asñflmiafms efi</span>
+                <textarea cols='40' rows='10' id='dbg-content-text'>asldjkf  aslfjasñ ñasjliefase</textarea>
+            </div>
+        </div>
+        
+        <div id='dbg-tools'>
+             <div class='dbg-titles'>
+                <ul id='dbg-menu-tools' class='dbg-buttons'>
+                    <li><a id='dbg-item-c'>Seis</a></li>
+                    <li><a id='dbg-item-d'>Siete</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+*/
+
+
+
+
+
+/*
+
+09/09/2013
+<div class="ui-draggable ui-resizable" id="dbg">
+   <div id="dbg-on">
+      <div id="dbg-head">
+         <ul id="dbg-menu-head" class="dbg-buttons">
+            <li><a id="dbg-item-close" href="#">[X]</a></li>
+            <li><a id="dbg-item-consola">Consola</a></li>
+            <li><a id="dbg-item-tools">Tools</a></li>
+         </ul>
+      </div>
+      <div id="dbg-consola">
+         <div class="dbg-titles">
+            <ul id="dbg-menu-consola" class="dbg-buttons">
+               <li><a href="#" id="dbg-item-0">dataJSON-var-js-0</a></li>
+               <li><a href="#" id="dbg-item-1">dataXML-0</a></li>
+               <li><a href="#" id="dbg-item-2">data+EJERCICIO</a></li>
+               <li><a href="#" id="dbg-item-3">ej-Recursivo</a></li>
+               <li class="selected"><a href="#" id="dbg-item-4">ORACIONES</a></li>
+               <li><a href="#" id="dbg-item-5">**ej-Recursivo**</a></li>
+               <li><a href="#" id="dbg-item-6">ej-NoRecursivo</a></li>
+            </ul>
+         </div>
+         <div id="dbg-content" class="dbg-content">
+            <span class="dbg-content-title">Titulo del contenido</span>
+            <textarea cols="40" rows="10" id="dbg-content-text">
+            xxxxxxx
+            </textarea>
+         </div>
+      </div>
+      <div id="dbg-tools">
+         <div class="dbg-titles">
+            <ul id="dbg-menu-tools" class="dbg-buttons">
+               <li><a id="dbg-item-JSON" href="#">JSON-Ej</a></li>
+               <li><a id="dbg-item-ejStatus" href="#">ActualStatus</a></li>
+            </ul>
+         </div>
+         <div id="dbg-content2" class="dbg-content">
+            <span class="dbg-content-title">Titulo</span>
+            <input id="dbg-input-tool" type="text"><input id="dbg-button-tool" value="AddItem" type="button">
+         </div>
+      </div>
+   </div>
+   <div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-e"></div>
+   <div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-s"></div>
+   <div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+</div>
+
+
+*/

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comportamiento Posicionable</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="posicionable"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>    
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <!--<script src="../recursos/ejercicio.js" type="text/javascript"></script>-->
+    <script>
+        // mockup Ejercicio y EjercicioPadre
+        window.Ejercicio = {};
+        window.EjercicioPadre = {
+            // escala 1:2
+            getScaleX: function () { return 0.5; },
+            getScaleY: function () { return 0.5; }            
+        };
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ComportamientoPosicionable");
+        QUnit.test("cfg {}", function( assert ) {
+            var cfg = {},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+                
+            assert.equal(posicionable.getWorldPos().x, null, "getWorldPos x");
+            assert.equal(posicionable.getWorldPos().y, null, "getWorldPos y");
+            assert.equal(posicionable.getWorldTam().w, null, "getWorldTam w");
+            assert.equal(posicionable.getWorldTam().h, null, "getWorldTam h");
+        });    
+        QUnit.test("cfg {x, y}", function( assert ) {
+            var cfg = {x: 12, y: 34},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+                
+            assert.equal(posicionable.getWorldPos().x, cfg.x, "cfg x");
+            assert.equal(posicionable.getWorldPos().y, cfg.y, "cfg y");
+        });    
+        QUnit.test("cfg {w, h}", function( assert ) {
+            var cfg = {w: 56, h: 78},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+                
+            assert.equal(posicionable.getWorldTam().w, cfg.w, "cfg w");
+            assert.equal(posicionable.getWorldTam().h, cfg.h, "cfg h");
+        });    
+        QUnit.test("cfg {ancho, alto}", function( assert ) {
+            var cfg = {ancho: 56, alto: 78},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+                
+            assert.equal(posicionable.getWorldTam().w, cfg.ancho, "cfg ancho");
+            assert.equal(posicionable.getWorldTam().h, cfg.alto, "cfg alto");
+        });    
+        QUnit.test("posicionar centrado", function( assert ) {
+            var cfg = {},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                elemento = document.getElementById('posicionable');
+            
+            posicionable.posicionar(elemento);
+            assert.ok(CHA.hasClass(elemento, "centrado"));
+        });    
+        QUnit.test("posicionar x, y, w, h", function( assert ) {
+            var cfg = {x: 12, y: 34, w: 56, h: 78},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                elemento = document.getElementById('posicionable');
+            
+            posicionable.posicionar(elemento);
+            assert.equal(elemento.style.left, '6px', "left");
+            assert.equal(elemento.style.top, '17px', "top");
+            assert.equal(elemento.style.width, '28px', "width");
+            assert.equal(elemento.style.height, '39px', "height");
+        });
+        QUnit.test("getScreenPos", function( assert ) {
+            var cfg = {x: 12, y: 34},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+           
+            assert.equal(posicionable.getScreenPos().x, 6, "getScreenPos x");
+            assert.equal(posicionable.getScreenPos().y, 17, "getScreenPos y");
+        });    
+        QUnit.test("setScreenPos", function( assert ) {
+            var cfg = {x: 12, y: 34},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+                
+            posicionable.setScreenPos(56, 78);
+            assert.equal(posicionable.getScreenPos().x, 56, "setScreenPos x Ok");
+            assert.equal(posicionable.getScreenPos().y, 78, "setScreenPos y Ok");
+            assert.equal(posicionable.getWorldPos().x, 56 / EjercicioPadre.getScaleX(), "setWorldPos x Ok");
+            assert.equal(posicionable.getWorldPos().y, 78 / EjercicioPadre.getScaleY(), "setWorldPos y Ok");
+        });    
+        QUnit.test("getWorldPos", function( assert ) {
+            var cfg = {x: 12, y: 34},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+           
+            assert.equal(posicionable.getWorldPos().x, 12, "getWorldPos x");
+            assert.equal(posicionable.getWorldPos().y, 34, "getWorldPos y");
+        });    
+        QUnit.test("setWorldPos", function( assert ) {
+            var cfg = {x: 12, y: 34},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+           
+            posicionable.setWorldPos(56, 78);
+            assert.equal(posicionable.getWorldPos().x, 56, "setWorldPos x");
+            assert.equal(posicionable.getWorldPos().y, 78, "setWorldPos y");
+            assert.equal(posicionable.getScreenPos().x, 56 * EjercicioPadre.getScaleX(), "setScreenPos x");
+            assert.equal(posicionable.getScreenPos().y, 78 * EjercicioPadre.getScaleY(), "setScreenPos y");
+        });    
+        QUnit.test("reset", function( assert ) {
+            var cfg = {x: 12, y: 34, w: 56, h: 78},
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg);
+           
+            posicionable.setScreenPos(1000, 2000);
+            posicionable.reset();
+           
+            assert.equal(posicionable.getWorldPos().x, 12, "reset x Ok");
+            assert.equal(posicionable.getWorldPos().y, 34, "reset y Ok");
+        });    
+    </script>
+</body>
+</html>
+

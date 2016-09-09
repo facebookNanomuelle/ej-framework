@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elemento CAJA</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        window.Ejercicio = {};
+        
+        // mockup EjercicioPadre
+        window.EjercicioPadre = {
+            // escala 1:2
+            getScaleX: function () { return 0.5; },
+            getScaleY: function () { return 0.5; },
+            config: { folder: '' }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoTexturizable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoCAJA.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ElementoCAJA");
+        QUnit.test("constructor", function( assert ) {
+            var id = "caja01",
+                cfg = {},                
+                caja = new Ejercicio.CAJA(id, cfg);
+                
+            assert.equal(caja.getId(), id, "getId es un metodo de CAJA");
+            assert.deepEqual(caja.getCfg(), cfg, "getCfg es un metodo de CAJA");
+            assert.equal(typeof caja.getPosicionable(), "object", "getPosicionable es un metodo de CAJA");
+            assert.equal(typeof caja.getTexturizable(), "object", "getTexturizable es un metodo de CAJA");
+            assert.equal(typeof caja.render, "function", "render es un metodo de CAJA");
+        });    
+    </script>
+</body>
+</html>
+

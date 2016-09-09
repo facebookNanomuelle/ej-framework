@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elemento TEXTO</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        window.Ejercicio = {};
+        
+        // mockup EjercicioPadre
+        window.EjercicioPadre = {
+            // escala 1:2
+            getScaleX: function () { return 0.5; },
+            getScaleY: function () { return 0.5; },
+            config: { folder: '' }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoTexturizable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoTEXTO.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("textoEngine");
+        QUnit.test("normalizarTexto espacios", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "palabra1 palabra2",
+                texto_normalizado = "palabra1&nbsp;palabra2";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto espacios", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "palabra1 palabra2",
+                texto_normalizado = "palabra1&nbsp;palabra2";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto negrita", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "p$Balabr/Ba",
+                texto_normalizado = "p<span class='bold'>alabr</span>a";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto cursiva", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "p$Ialabr/Ia",
+                texto_normalizado = "p<span class='italic'>alabr</span>a";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto subrayado", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "p$Ualabr/Ua",
+                texto_normalizado = "p<span class='underline'>alabr</span>a";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto superindice", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "p$Spalabr/Spa",
+                texto_normalizado = "p<sup>alabr</sup>a";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto subindice", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "p$Sbalabr/Sba",
+                texto_normalizado = "p<sub>alabr</sub>a";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto color", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                texto = "p$F#FFFFFF#alabr/Fa",
+                texto_normalizado = "p<span style='color:FFFFFF;'>alabr</span>a";
+                        
+            assert.equal(engine.normalizarTexto(texto), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.test("normalizarTexto salto de linea personalizado", function( assert ) {
+            var engine = new Ejercicio.TEXTO.__TestableTextoEngine__(),
+                marcador_salto_de_linea = "&",
+                texto = "parrafo1" + marcador_salto_de_linea + "parrafo2",
+                texto_normalizado = "parrafo1<br>parrafo2";
+                        
+            assert.equal(engine.normalizarTexto(texto, marcador_salto_de_linea), texto_normalizado, "texto_normalizado es " + texto_normalizado);
+        });    
+        QUnit.module("ElementoTEXTO");
+        QUnit.test("constructor", function( assert ) {
+            var id = "texto01",
+                cfg = {},                
+                texto = new Ejercicio.TEXTO(id, cfg);
+                
+            assert.equal(texto.getId(), id, "id es " + id);
+            assert.deepEqual(texto.getCfg(), cfg, "cfg es " + cfg);
+        });    
+        QUnit.test("Config CLASE_TEXTO", function( assert ) {
+            var id = "texto01",
+                clase_texto_personalizada = "clase_texto_personalizada",
+                cfg = {
+                    CLASE_TEXTO: clase_texto_personalizada
+                },
+                texto = new Ejercicio.TEXTO(id, cfg);
+                
+            assert.equal(texto.getClaseTexto(), clase_texto_personalizada, "getClaseTexto es " + clase_texto_personalizada);
+        });    
+        QUnit.test("Config tamTexto", function( assert ) {
+            var id = "texto01",
+                cfg = {
+                    tamTexto: "20"
+                },
+                texto = new Ejercicio.TEXTO(id, cfg);
+                
+            assert.equal(texto.getWorldFontSize(), 20, "getWorldFontSize es " + 20);
+        });    
+        QUnit.test("Config tam", function( assert ) {
+            var id = "texto01",
+                cfg = {
+                    tam: "20"
+                },
+                texto = new Ejercicio.TEXTO(id, cfg);
+                
+            assert.equal(texto.getWorldFontSize(), 20, "getWorldFontSize es " + 20);
+        });    
+        QUnit.test("Config fuente", function( assert ) {
+            var id = "texto01",
+                cfg = {
+                    fuente: '"Courier New", Monospace'
+                },
+                texto = new Ejercicio.TEXTO(id, cfg);
+                
+            assert.equal(texto.getFontFamily(), cfg.fuente, "getFontFamily es " + cfg.fuente);
+        });    
+        QUnit.test("setTexto", function( assert ) {
+            var id = "texto01",
+                cfg = {},  
+                textoDePrueba = "prueba",
+                texto = new Ejercicio.TEXTO(id, cfg);
+            
+            texto.setTexto(textoDePrueba);
+            assert.equal(texto.getTexto(), textoDePrueba, "getTexto() es " + textoDePrueba);
+        });    
+    </script>
+</body>
+</html>
+

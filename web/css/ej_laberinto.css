@@ -1,0 +1,31 @@
+/* Laberinto  */
+div.lbt_block {
+	position: absolute;
+	opacity: 0.5;
+}
+
+div.lbt_item, div.lbt_sentence {
+	position: absolute;
+	text-align:center;
+}
+
+div.lbt_word {
+	position: absolute;
+	background: url('../res/caja_palabra.png') no-repeat top left;
+	text-align:center;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+}
+
+div.lbt_button 
+{
+	position:absolute;
+	cursor: pointer;
+}
+
+div.lbt_button:hover 
+{
+	position:absolute;
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comportamiento Texturizable</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        window.Ejercicio = {};
+        
+        // mockup EjercicioPadre
+        window.EjercicioPadre = {
+            // escala 1:2
+            getScaleX: function () { return 0.5; },
+            getScaleY: function () { return 0.5; },
+            config: { folder: '' }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoTexturizable.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ComportamientoTexturizable");
+        QUnit.test("clase texturizable", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {},                
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            assert.ok(CHA.hasClass(elemento, 'texturizable'), "added clase texturizable");
+        });    
+        QUnit.test("cfg.color", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    color: 'FFFFFF'
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            assert.ok(elemento.style.color.indexOf('255, 255, 255') !== -1, "cfg.color");
+        });    
+        QUnit.test("cfg.colorFondo", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    colorFondo: 'FFFFFF'
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            assert.ok(elemento.style.backgroundColor.indexOf('255, 255, 255') !== -1, "cfg.colorFondo");
+        });    
+        QUnit.test("cfg.transparencia", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    transparencia: 0.5
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            assert.equal(elemento.style.opacity, 0.5, "cfg.transparencia");
+        });    
+        QUnit.test("cfg.imagen", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                nombre_imagen = 'imagen_fondo.png',
+                cfg = {
+                    imagen: nombre_imagen
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            assert.ok(elemento.style.backgroundImage.indexOf(nombre_imagen) !== -1, "cfg.imagen");
+        });    
+        QUnit.test("setImagen", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                nombre_imagen = 'imagen_defecto.png',
+                nombre_nueva_imagen = 'imagen_nueva.png',
+                cfg = {
+                    imagen: nombre_imagen
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            texturizable.setImagen(nombre_nueva_imagen);
+            assert.ok(elemento.style.backgroundImage.indexOf(nombre_nueva_imagen) !== -1, "setImagen");
+        });
+        QUnit.test("setFrame", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                cfg = {
+                    numFrames: 3
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg);
+            
+            texturizable.texturizar(elemento, posicionable);
+            assert.equal(texturizable.getFrame(), 0, "getFrame es 0");
+            
+            texturizable.setFrame(1);
+            assert.equal(texturizable.getFrame(), 1, "getFrame es 1");            
+        });
+        QUnit.test("animarFondoNVeces", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                nombre_imagen = 'imagen_fondo.png',
+                veces = 2,
+                cfg = {
+                    ancho: 50,
+                    alto: 50,
+                    imagen: nombre_imagen,
+                    numFrames: 7,
+                    tiempo: 10
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg),
+                tiempo_minimo = veces * cfg.tiempo * cfg.numFrames,
+                done = assert.async(),
+                animacionFinalizadaHandler = function () {
+                    var tiempo_final = Date.now() - tiempo_inicial;
+                    
+                    assert.equal(texturizable.getFrame(), 0, 'frame = 0');
+                    assert.ok(tiempo_final >= tiempo_minimo, 'animarFondoNVeces callback');
+                    done();
+                },
+                tiempo_inicial;
+            
+            texturizable.texturizar(elemento, posicionable);
+            tiempo_inicial = Date.now();
+            texturizable.animarFondoNVeces(veces, animacionFinalizadaHandler);
+        });    
+        QUnit.test("animarFondo", function( assert ) {
+            var elemento = document.getElementById('test_div'),
+                nombre_imagen = 'imagen_fondo.png',
+                cfg = {
+                    ancho: 50,
+                    alto: 50,
+                    imagen: nombre_imagen,
+                    numFrames: 200,
+                    tiempo: 5
+                },
+                posicionable = new Ejercicio.ComportamientoPosicionable(cfg),
+                texturizable = new Ejercicio.ComportamientoTexturizable(cfg),
+                done = assert.async();
+            
+            texturizable.texturizar(elemento, posicionable);            
+            texturizable.animarFondo();            
+            window.setTimeout(function () {
+                assert.notEqual(texturizable.getFrame(), 0, 'animarFondo getFrame !== 0');
+                texturizable.detenerFondoAnimado();                
+                assert.equal(texturizable.getFrame(), 0, 'detenerFondoAnimado getFrame == 0');
+                done();
+            }, cfg.tiempo * 3); // cualquier valor menor que (numFrames * tiempo) para cortar la animacion en un fotograma diferente al inicial.
+        });    
+    </script>
+</body>
+</html>
+

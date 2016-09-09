@@ -1,0 +1,120 @@
+﻿/* CLASIFICAR */
+div.sourcebox,
+div.draggedbox,
+div.targetbox
+{    
+    position: absolute;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    
+    /*background-color:#FFFFFF;*/
+    
+    text-align:center;
+    
+    background-clip: padding-box;      /* Firefox 4+, Safari 5, Opera 10, IE 9 */
+    -moz-background-clip: padding;     /* Firefox 3.6+ */
+    -webkit-background-clip: padding;  /* Safari 4 Chrome 6 */        
+}
+
+div.sourcebox {
+    cursor: pointer;    
+}
+
+div.sourcebox p, 
+div.draggedbox p {
+    margin: 0;
+}
+
+/* centrado vertical 
+div.sourcebox span.innertext,
+div.targetbox span.innertext{
+    top:50%!important;
+    margin-top:-0.5em!important;
+}
+
+
+
+div.targetbox.capitalize div.draggedbox span::first-letter
+{
+    text-transform: capitalize!important;
+    color:red;
+}
+*/
+
+img.c {
+    display:none !important;
+}
+img.i {
+    display:none !important;
+}
+
+.correct img.b,
+.incorrect img.b {
+    display:none !important;
+}
+
+.correct img.c {
+    display:block !important;
+}
+
+.incorrect img.i {
+    display:block !important;
+}
+
+div.targetbox {
+    position: static !important;
+    overflow: hidden;
+}
+
+div.targetbox.inline {
+    position:static!important;
+    display:inline-block!important;
+    vertical-align:text-top!important;
+/*    zoom:1!important;             // (Hack for ie7 y 8
+    *display:inline!important;    // (Hack for ie7 y 8*/
+}
+
+/*div.targetbox.inline div.draggedbox{
+    position:static!important;
+}*/
+
+div.draggedbox {
+    display:table-cell;
+}
+
+div.draggedbox>span{
+    display:inline;
+}
+
+div.fraseTarget {
+    display:table-row;
+}
+
+div.fraseTarget div.targetbox,
+div.fraseTarget>span {
+    display:table-cell!important;
+    vertical-align:middle!important;
+}
+/*div.targetbox {
+    position:static!important;
+    vertical-align:text-top!important;
+    display:inline-block!important;
+    zoom:1!important;             // (Hack for ie7 y 8
+    *display:inline!important;    // (Hack for ie7 y 8
+}*/
+div.resaltarCaja span.innertext{
+    border: 2px solid black;
+    background-color: white!important;
+}
+
+.sourcebox {
+    z-index: 2;
+}
+.sourcebox.permanencia{
+    z-index: 1;
+}
+.sourcebox.permanencia img {
+    opacity: 1;
+}

@@ -1,0 +1,42 @@
+.casilla {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000;
+    
+    background-color: #eee;
+    position: static;
+    
+    z-index: 1;    
+}
+
+.casilla:focus {
+    background-color: #FFFF80;
+}
+
+.casilla_negra {
+    border-color: #000;
+    background-color: #000;
+}
+
+.casilla_espacio {
+    border-color: #000;
+    background-color: #000;
+}
+
+.casilla_blanca {
+    border-color: transparent;
+    background-color: transparent;
+    z-index: 0;
+}
+
+.casilla_down, .casilla_right {
+    cursor: pointer;
+}  
+
+.casilla.casilla_correcta {
+    color: green;
+}
+
+.casilla.casilla_incorrecta {
+    color: red;
+}

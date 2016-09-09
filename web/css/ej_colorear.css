@@ -1,0 +1,100 @@
+#contenedor_colorear {
+    text-align: center;
+    width: 98%;
+    height: 98%;
+    left: 1%;
+    overflow: hidden;
+    padding: 0px;
+    /*padding: 10px;*/
+    
+    /* debug */
+    /*background-color: #ddd;*/
+}
+
+#divLienzo {
+	display:none;
+        
+        position:static!important;
+        display:inline-block!important;
+        vertical-align: top;
+        
+        margin: 6px;
+	/*float:left;*/
+        /*margin-left:30px;*/
+	/*margin-top:30px;*/
+/*	margin-right:30px;
+	margin-bottom:30px;*/
+        /*margin:20px;*/
+	/*background-color:#fff;*/
+        
+        cursor: pointer;
+        
+        /* debug */
+        /*background-color: #ee0;*/
+
+/*    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    -moz-box-shadow:0px 0px 8px #ccc;
+    -webkit-box-shadow:0px 0px 8px #ccc;
+    box-shadow:0px 0px 8px #ccc;*/
+}
+
+#divLienzo canvas {
+/*    position: absolute!important;
+    left: 0;
+    top: 0;*/
+}
+#divPaleta {
+    display:none;
+    
+    position:static!important;    
+    display:inline-block!important;
+    vertical-align:top;
+    
+    margin:6px;
+    padding-top:6px;
+    padding-bottom:6px;
+    
+    /*position:static!important;*/
+    /*margin:20px;*/
+    /*background-color:#FFF;*/
+    cursor: pointer;
+    
+    /* debug */
+    /*background-color: #0ee;*/
+    
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    -moz-box-shadow:0px 0px 8px #ccc;
+    -webkit-box-shadow:0px 0px 8px #ccc;
+    box-shadow:0px 0px 8px #ccc;
+}
+
+.divColorPaleta {
+    position:static!important;
+    display:inline-block!important;
+    margin:auto!important;
+    vertical-align: bottom;
+    
+    /*border-color:#EEE;*/
+    
+    -moz-border-radius:60px;
+    -webkit-border-radius:60px;
+    border-radius:60px;
+    -moz-box-shadow:0px 0px 80px #ccc;
+    -webkit-box-shadow:0px 0px 80px #ccc;
+    box-shadow:0px 0px 80px #ccc;
+}
+
+/*
+
+ * Parametros para res/ej_colorear.css
+
+ Paleta: Color del Borde del color seleccionado
+.divColorPaleta.colorSelected {
+    border-color:#444!important;
+}
+
+*/

@@ -1,0 +1,8 @@
+/* Chronometer  */
+#chrono div {
+    position:static;
+    display:inline-block;
+}
+#chrono span {
+    margin: 0 10px;
+}

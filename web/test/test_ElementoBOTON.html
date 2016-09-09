@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elemento BOTON</title>
+    <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />	
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    
+    <link href="../css/ejercicio.css" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="qunit/qunit-2.0.1.css">
+</head>
+<body>  
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div id="test_div"></div>
+    </div>    
+    
+    <script src="qunit/qunit-2.0.1.js"></script>
+    <script src="../jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+    
+    <script src="../recursos/constantes_develop.js" type="text/javascript"></script>
+    <script src="../recursos/cha.js" type="text/javascript" ></script>
+    <script src="../recursos/CHA.DomHelper.js" type="text/javascript" ></script>
+    
+    <script>
+        // mockup Ejercicio
+        var triggerMouseDownEventOnElement = function(elemento, p_nombre_evento) {
+                var mouseDownEvent = document.createEvent('MouseEvents');
+                mouseDownEvent.initEvent(p_nombre_evento, true, true);
+                elemento.dispatchEvent(mouseDownEvent);
+            };
+        
+        window.Ejercicio = {
+            crearTagDiv: CHA.domHelper.crearTagDiv
+        };
+        
+        // mockup EjercicioPadre
+        window.EjercicioPadre = {
+            config: { folder: '' },
+            
+            // escala 1:2
+            getScaleX: function () { return 0.5; },
+            getScaleY: function () { return 0.5; }
+        };
+        
+    </script>
+    <script src="../recursos/Ejercicio.ComportamientoPosicionable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoTexturizable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ComportamientoPulsable.js" type="text/javascript"></script>
+    <script src="../recursos/Ejercicio.ElementoBOTON.js" type="text/javascript"></script>
+    
+    <script language="javascript">
+        QUnit.module("ElementoBOTON");
+        QUnit.test("constructor", function( assert ) {
+            var id = "boton01",
+                cfg = {},                
+                boton = new Ejercicio.BOTON(id, cfg);
+                
+            assert.equal(boton.getId(), id, "getId es un metodo de BOTON");
+            assert.deepEqual(boton.getCfg(), cfg, "getCfg es un metodo de BOTON");
+            assert.equal(typeof boton.getPosicionable(), "object", "getPosicionable es un metodo de BOTON");
+            assert.equal(typeof boton.getPulsable(), "object", "getPulsable es un metodo de BOTON");
+            assert.equal(typeof boton.render, "function", "render es un metodo de BOTON");
+        });    
+        QUnit.test("activar / desactivar", function( assert ) {
+            var id = "boton01",
+                cfg = {},                
+                boton = new Ejercicio.BOTON(id, cfg);
+                
+            assert.equal(boton.estaActivo(), true, "boton esta activo por defecto");
+            boton.desactivar();
+            assert.equal(boton.estaActivo(), false, "boton desactivado");
+            boton.activar();
+            assert.equal(boton.estaActivo(), true, "boton activo de nuevo");
+        });    
+        QUnit.test("presionar / relajar", function( assert ) {
+            var id = "boton01",
+                cfg = {},
+                boton = new Ejercicio.BOTON(id, cfg);
+                
+            assert.equal(boton.estaPresionado() && boton.estaActivo(), false, "boton esta relajado por defecto");
+            boton.presionar();
+            assert.equal(boton.estaPresionado() && boton.estaActivo(), true, "boton presionado");
+            boton.relajar();
+            assert.equal(boton.estaPresionado() && boton.estaActivo(), false, "boton esta relajado de nuevo");
+        });    
+        QUnit.test("presionado correcto", function( assert ) {
+            var id = "boton01",
+                cfg = {},
+                boton = new Ejercicio.BOTON(id, cfg);
+            
+            boton.setPresionadoCorrecto();
+            assert.equal(boton.estaPresionado() && !boton.estaActivo() && boton.estaCorrecto(), true, "boton esta presionado, desactivado y correcto");
+        });    
+        QUnit.test("presionado incorrecto", function( assert ) {
+            var id = "boton01",
+                cfg = {},
+                boton = new Ejercicio.BOTON(id, cfg);
+            
+            boton.setPresionadoIncorrecto();
+            assert.equal(boton.estaPresionado() && !boton.estaActivo() && !boton.estaCorrecto(), true, "boton esta presionado, desactivado e incorrecto");
+        });    
+        QUnit.test("render", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));            
+            elemento_boton = document.getElementById(id);
+            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.ok(hasClass(elemento_boton, 'activo'), "El elemento tiene la clase: activo");
+            assert.notOk(hasClass(elemento_boton, 'presionado'), "El elemento no tiene la clase: presionado");
+            assert.notOk(hasClass(elemento_boton, 'correcto'), "El elemento no tiene la clase: correcto");
+            assert.notOk(hasClass(elemento_boton, 'incorrecto'), "El elemento no tiene la clase: incorrecto");
+        });
+        QUnit.test("render desactivar", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));                        
+            boton.desactivar();
+            
+            elemento_boton = document.getElementById(id);            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.notOk(hasClass(elemento_boton, 'activo'), "El elemento no tiene la clase: activo");
+            assert.notOk(hasClass(elemento_boton, 'presionado'), "El elemento no tiene la clase: presionado");
+            assert.notOk(hasClass(elemento_boton, 'correcto'), "El elemento no tiene la clase: correcto");
+            assert.notOk(hasClass(elemento_boton, 'incorrecto'), "El elemento no tiene la clase: incorrecto");
+        });
+        QUnit.test("render activar", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));                        
+            boton.desactivar();
+            boton.activar();
+            
+            elemento_boton = document.getElementById(id);            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.ok(hasClass(elemento_boton, 'activo'), "El elemento tiene la clase: activo");
+            assert.notOk(hasClass(elemento_boton, 'presionado'), "El elemento no tiene la clase: presionado");
+            assert.notOk(hasClass(elemento_boton, 'correcto'), "El elemento no tiene la clase: correcto");
+            assert.notOk(hasClass(elemento_boton, 'incorrecto'), "El elemento no tiene la clase: incorrecto");
+        });
+        QUnit.test("render presionar", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));            
+            
+            boton.presionar();            
+            elemento_boton = document.getElementById(id);            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.ok(hasClass(elemento_boton, 'activo'), "El elemento tiene la clase: activo");
+            assert.ok(hasClass(elemento_boton, 'presionado'), "El elemento tiene la clase: presionado");
+            assert.notOk(hasClass(elemento_boton, 'correcto'), "El elemento no tiene la clase: correcto");
+            assert.notOk(hasClass(elemento_boton, 'incorrecto'), "El elemento no tiene la clase: incorrecto");
+        });
+        QUnit.test("render relajar", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));            
+            
+            boton.presionar();
+            boton.relajar();
+            elemento_boton = document.getElementById(id);            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.ok(hasClass(elemento_boton, 'activo'), "El elemento tiene la clase: activo");
+            assert.notOk(hasClass(elemento_boton, 'presionado'), "El elemento no tiene la clase: presionado");
+            assert.notOk(hasClass(elemento_boton, 'correcto'), "El elemento no tiene la clase: correcto");
+            assert.notOk(hasClass(elemento_boton, 'incorrecto'), "El elemento no tiene la clase: incorrecto");
+        });
+        QUnit.test("render presionadoCorrecto", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));                       
+            boton.setPresionadoCorrecto();
+            
+            elemento_boton = document.getElementById(id);            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.notOk(hasClass(elemento_boton, 'activo'), "El elemento no tiene la clase: activo");
+            assert.ok(hasClass(elemento_boton, 'presionado'), "El elemento tiene la clase: presionado");
+            assert.ok(hasClass(elemento_boton, 'correcto'), "El elemento tiene la clase: correcto");
+            assert.notOk(hasClass(elemento_boton, 'incorrecto'), "El elemento no tiene la clase: incorrecto");
+        });
+        QUnit.test("render presionadoIncorrecto", function ( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                boton = new Ejercicio.BOTON(id, cfg),
+                elemento_boton,
+                hasClass = CHA.domHelper.hasClass;
+            
+            boton.render(document.getElementById('qunit-fixture'));                       
+            boton.setPresionadoIncorrecto();
+            
+            elemento_boton = document.getElementById(id);            
+            assert.ok(elemento_boton, "Se ha creado el boton con id " + id);
+            assert.notOk(hasClass(elemento_boton, 'activo'), "El elemento no tiene la clase: activo");
+            assert.ok(hasClass(elemento_boton, 'presionado'), "El elemento tiene la clase: presionado");
+            assert.notOk(hasClass(elemento_boton, 'correcto'), "El elemento no tiene la clase: correcto");
+            assert.ok(hasClass(elemento_boton, 'incorrecto'), "El elemento tiene la clase: incorrecto");
+        });
+        QUnit.test("evento onPulsado", function( assert ) {
+            var id = "boton01",
+                cfg = {x: 0, y: 0, w: 10, h: 10},
+                testigo_pulsado = false,
+                onPulsadoHandler = function () {
+                    testigo_pulsado = !testigo_pulsado;
+                },
+                boton = new Ejercicio.BOTON(id, cfg),
+                nombre_evento_gestionado;
+            
+            boton.onPulsado(onPulsadoHandler);
+            boton.render(document.getElementById('qunit-fixture'));
+            nombre_evento_gestionado = boton.getPulsable().getNombreEventoGestionado();
+            triggerMouseDownEventOnElement(document.getElementById(id), nombre_evento_gestionado);
+            
+            assert.ok(testigo_pulsado, nombre_evento_gestionado + ": testigo_pulsado es true");
+            boton.desactivar();
+            assert.notOk(boton.estaActivo(), "el boton se ha desactivado");
+            assert.ok(testigo_pulsado, nombre_evento_gestionado + ": testigo_pulsado sigue siendo true");
+        });    
+    </script>
+</body>
+</html>
+
